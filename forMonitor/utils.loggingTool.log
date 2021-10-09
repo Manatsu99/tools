@@ -1,0 +1,18 @@
+2021-10-07 05:53:06,047 - utils.loggingTool - INFO - test
+[2021-10-07 05:53:42,030] - utils.loggingTool - INFO - test
+[2021-10-07 05:54:05,104]	utils.loggingTool	INFO - test
+[2021-10-07 05:56:39,219]	[INFO]	[utils.loggingTool]:	test
+[2021-10-07 05:57:14,885] [INFO] [utils.loggingTool]:	test
+[2021-10-07 05:57:47,871] [INFO] [utils.loggingTool]: test
+[2021-10-07 05:57:56,259] [INFO] [utils.loggingTool]: test
+[2021-10-09 19:42:28,296] [INFO] [utils.loggingTool]: test
+[2021-10-09 19:42:59,406] [INFO] [utils.loggingTool]: test
+[2021-10-09 19:44:22,488] [INFO] [utils.loggingTool]: test
+[2021-10-09 19:46:23,608] [INFO] [utils.loggingTool]: test
+[2021-10-09 19:46:41,027] [INFO] [utils.loggingTool]: test
+[2021-10-09 19:47:01,494] [INFO] [utils.loggingTool]: test
+[2021-10-09 19:47:02,229] [INFO] [utils.loggingTool]: test
+[2021-10-09 19:48:10,101] [INFO] [utils.loggingTool]: test
+[2021-10-09 19:48:24,825] [INFO] [utils.loggingTool]: test
+[2021-10-09 19:49:45,267] [INFO] [utils.loggingTool]: test
+[2021-10-09 19:50:01,242] [INFO] [utils.loggingTool]: test
