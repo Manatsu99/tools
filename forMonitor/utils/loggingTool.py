@@ -7,16 +7,22 @@ from logging import getLogger
 from logging import DEBUG, INFO, FileHandler, StreamHandler, Formatter, basicConfig
 
 class loggingTool:
-    def __init__(self, isDebug=False, isConsole=True, isFile=False, profile="forTest", startTime=None):
+    def __init__(self, isDebug=False, isConsole=True, isFile=False, profile="forTest", startTime=None, name=None):
         self.isDebug = isDebug
         self.isConsole = isConsole
         self.isFile = isFile
         self.profile = profile
         self.startTime = startTime
-        import inspect
-        self.name = str(inspect.stack()[1].filename).rsplit('.')[0]
+        if name is None:
+            import inspect
+            self.name = str(inspect.stack()[1].filename).rsplit('.')[0]
+        else:
+            self.setName(name)
         self.initialize()
 
+    def setName(self, name):
+        self.name = name
+    
     def i_makeDirs(self):
         import configparser
         config = configparser.ConfigParser()

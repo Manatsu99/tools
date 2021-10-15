@@ -21,6 +21,7 @@ _sec8 = 'seed'
 _sec9 = 'monitorcfg'
 
 def run(profile, test, debug):
+    print(type(startTime))
     l = lTool.loggingTool(True,True,True, profile, startTime)
     t = ''
     import sys
@@ -61,13 +62,36 @@ def run(profile, test, debug):
     cFileName = identifier+'.ini'
 
     c_val = cParser.get(_sec9, 'val')
+    c_all = cParser.getboolean(_sec9, 'all')
     c_monitor = cParser.get(_sec9, 'scriptname')
 
     cwd = c_root+c_ResNet+c_script
     textpath = '../../'+c_text
-    communicateWithMonitor(l,c_monitor,  c_val, cFileName, identifier, cwd, textpath, c_imageSet)
+    l.it("c_all: "+str(c_all))
+    if c_all is False:
+        l.it("WithMonitor")
+        communicateWithMonitor(profile, l,c_monitor,  c_val, cFileName, identifier, cwd, textpath, c_imageSet)
+    else:
+        l.it("WithALL")
+        communicateAll(profile, l,c_monitor,  c_val, cFileName, identifier, cwd, textpath, c_imageSet)
 
-def communicateWithMonitor(l, monitor, val, conf, datetime, _cwd, txtpath, imgset):
+def communicateAll(profile, l, monitor, val, conf, identify, _cwd, txtpath, imgset):
+    l.i("communicateAll")
+    import datetime
+    _tz = datetime.timezone(datetime.timedelta(hours=9))
+    _startTime = datetime.datetime.now(_tz)
+    _l = lTool.loggingTool(True,True,True, profile=profile, startTime=_startTime, name = 'communicateALL')
+    import os
+    total = sum(os.path.isfile(os.path.join(_cwd+txtpath+imgset, name)) for name in os.listdir(_cwd+txtpath+imgset))
+    _l.i("monitor: "+str(monitor))
+    _l.i("val: "+str(val))
+    _l.i("conf: "+str(conf))
+    _l.i("identify: "+str(identify))
+    _l.i("Files: "+str(total))
+
+    pass
+
+def communicateWithMonitor(profile, l, monitor, val, conf, identify, _cwd, txtpath, imgset):
     l.i("communicateSubprocess")
     l.d('cwd: '+_cwd)
     l.d('txtpath: '+_cwd+txtpath)
@@ -75,18 +99,23 @@ def communicateWithMonitor(l, monitor, val, conf, datetime, _cwd, txtpath, imgse
     val = txtpath+imgset+'/'+imgset+'_master_'+val+'.txt'
 
     # cmd = "python3 "+monitor+" "+val+" "+conf+" -d "+ datetime
-    cmd = ['python3', monitor, val, conf, "-d", datetime]
+    cmd = ['python3', monitor, val, conf, "-d", identify]
     #cmd = 'ls'
+    import datetime
+    _tz = datetime.timezone(datetime.timedelta(hours=9))
+    _startTime = datetime.datetime.now(_tz)
     l.i("cmd: "+str(cmd))
-
+    print(type(_startTime))
+    _l = lTool.loggingTool(True,True,True, profile=profile, startTime=_startTime, name = monitor.rsplit('.')[0])
     import subprocess
     p = subprocess.Popen(cmd, cwd=_cwd, 
                        stdout=subprocess.PIPE,
                        stderr=subprocess.STDOUT
                        )
     for line in iter(p.stdout.readline, b''):
-        l.i(line.decode('utf-8'))
-    pass
+        _l.i(line.decode('utf-8'))
+    p.wait()
+    l.i("communicate finished.")
 
 def generateConfig(l, cParser, identifier, scriptPath):
     l.i("reading config from profile...")
